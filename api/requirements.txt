@@ -1,0 +1,16 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+sqlalchemy>=2.0.0
+pymysql>=1.1.0
+python-multipart>=0.0.9
+openai>=1.0.0
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=7.0.0
+httpx>=0.25.0
+pytest-cov>=4.0.0
+
+# Quality
+ruff>=0.4.0
+mypy>=1.8.0

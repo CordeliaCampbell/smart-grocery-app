@@ -1,0 +1,39 @@
+name: SmartGrocery
+
+options:
+  bundleIdPrefix: com.smartgrocery
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "15"
+  createIntermediateGroups: true
+
+targets:
+  SmartGrocery:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+
+    sources:
+      - path: ios/SmartGrocery
+        createIntermediateGroups: true
+
+    info:
+      path: ios/SmartGrocery/Info.plist
+      properties:
+        CFBundleDisplayName: Smart Grocery
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSPhotoLibraryUsageDescription: "Needed to pick grocery photos from your library."
+        NSCameraUsageDescription: "Needed to photograph items for recognition."
+        NSUserNotificationUsageDescription: "Needed to remind you when items are running low."
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+          NSAllowsArbitraryLoads: true
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.smartgrocery.app
+        SWIFT_VERSION: "5.9"
+        TARGETED_DEVICE_FAMILY: "1"
+        ENABLE_PREVIEWS: YES

@@ -1,0 +1,54 @@
+version: '3'
+
+tasks:
+  default:
+    desc: List all available tasks
+    cmds:
+      - task --list
+
+  # ─── Database ────────────────────────────────────────────
+  db:migrate:
+    desc: Apply the MySQL schema (prompts for password)
+    cmds:
+      - mysql -u root -p < db/schema.sql
+
+  db:migrate-env:
+    desc: Apply schema using MYSQL_PASSWORD env var (non-interactive)
+    cmds:
+      - mysql -u root -p$MYSQL_PASSWORD smart_grocery < db/schema.sql
+
+  # ─── API ─────────────────────────────────────────────────
+  api:install:
+    desc: Install Python dependencies
+    cmds:
+      - pip install -r api/requirements.txt
+
+  api:dev:
+    desc: Start FastAPI dev server with hot-reload on :8000
+    cmds:
+      - uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+
+  api:test:
+    desc: Run pytest with coverage (requires ≥75%)
+    cmds:
+      - pytest api/tests/ -v --cov=api --cov-report=term-missing --cov-fail-under=75
+
+  api:lint:
+    desc: Run ruff linter
+    cmds:
+      - ruff check api/
+
+  api:format:
+    desc: Auto-format with ruff
+    cmds:
+      - ruff format api/
+
+  api:typecheck:
+    desc: Run mypy type checker
+    cmds:
+      - mypy api/ --ignore-missing-imports
+
+  # ─── All checks (pre-commit) ─────────────────────────────
+  check:
+    desc: Run lint + typecheck + tests (run before every commit)
+    deps: [api:lint, api:typecheck, api:test]
