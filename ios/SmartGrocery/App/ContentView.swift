@@ -18,6 +18,9 @@ struct ContentView: View {
             RemindersView()
                 .tabItem { Label("Reminders", systemImage: "bell.fill") }
         }
+        // GitHub-style: dark canvas + green accent on all interactive elements
+        .tint(.githubGreen)
+        .preferredColorScheme(.dark)
     }
 }
 

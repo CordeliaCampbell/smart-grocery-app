@@ -12,8 +12,12 @@ struct UploadView: View {
                 imagePreview
                     .frame(maxWidth: .infinity)
                     .frame(height: 280)
-                    .background(Color(.systemGroupedBackground))
+                    .background(Color.githubSurface)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .strokeBorder(Color.githubBorder, lineWidth: 1)
+                    )
                     .padding(.horizontal)
 
                 pickerButtons
