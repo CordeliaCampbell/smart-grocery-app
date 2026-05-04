@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class ConfirmItemsViewModel {
     // Editable row the user can tweak before saving
@@ -19,17 +20,13 @@ final class ConfirmItemsViewModel {
     var errorMessage: String?
     var savedCount = 0
 
-    private let api = APIService.shared
+    private let store = LocalStore.shared
 
     func load(detected: [DetectedItem]) async {
         editableItems = detected.map {
             EditableItem(name: $0.name, category: $0.category)
         }
-        do {
-            categories = try await api.fetchCategories()
-        } catch {
-            // Non-fatal — user can still save without category assignment
-        }
+        categories = await store.fetchCategories()
     }
 
     func saveAll() async {
@@ -39,6 +36,10 @@ final class ConfirmItemsViewModel {
 
         for editable in editableItems {
             let categoryId = categories.first { $0.name == editable.category }?.id
+            guard !editable.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                continue
+            }
+
             let create = ItemCreate(
                 name: editable.name,
                 categoryId: categoryId,
@@ -46,13 +47,9 @@ final class ConfirmItemsViewModel {
                 unit: editable.unit,
                 reminderEnabled: editable.reminderEnabled
             )
-            do {
-                let saved = try await api.createItem(create)
-                await NotificationService.shared.scheduleReminder(for: saved)
-                savedCount += 1
-            } catch {
-                errorMessage = "Failed to save \"\(editable.name)\": \(error.localizedDescription)"
-            }
+            let saved = await store.createItem(create)
+            await NotificationService.shared.scheduleReminder(for: saved)
+            savedCount += 1
         }
 
         isSaving = false

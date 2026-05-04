@@ -22,7 +22,8 @@ enum APIError: Error, LocalizedError {
 
 final class APIService {
     static let shared = APIService()
-    static let baseURL = "http://localhost:8000"
+    // TODO: replace with your Railway URL, e.g. "https://smart-grocery-app-production.up.railway.app"
+    static let baseURL = "http://10.0.0.199:8000"
 
     private let session: URLSession
     private let decoder: JSONDecoder

@@ -5,24 +5,20 @@ import UIKit
 @Observable
 final class UploadViewModel {
     var selectedImage: UIImage?
-    var isAnalyzing = false
+    var isPreparing = false
     var errorMessage: String?
     var detectedItems: [DetectedItem] = []
     var showConfirmation = false
 
-    private let recognizer = ImageRecognitionService.shared
 
     func analyze() async {
-        guard let image = selectedImage else { return }
-        isAnalyzing = true
+        isPreparing = true
         errorMessage = nil
-        do {
-            detectedItems = try await recognizer.analyze(image: image)
-            showConfirmation = !detectedItems.isEmpty
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-        isAnalyzing = false
+        detectedItems = [
+            DetectedItem(name: "", category: "Other", confidence: 1.0)
+        ]
+        showConfirmation = true
+        isPreparing = false
     }
 
     func reset() {

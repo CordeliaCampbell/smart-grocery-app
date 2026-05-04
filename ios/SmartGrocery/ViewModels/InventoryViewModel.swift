@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class InventoryViewModel {
     var items: [Item] = []
@@ -10,7 +11,7 @@ final class InventoryViewModel {
     var isLoading = false
     var errorMessage: String?
 
-    private let api = APIService.shared
+    private let store = LocalStore.shared
 
     var filtered: [Item] {
         items.filter { item in
@@ -24,29 +25,20 @@ final class InventoryViewModel {
     func load() async {
         isLoading = true
         errorMessage = nil
-        do {
-            async let fetchedItems = api.fetchItems()
-            async let fetchedCategories = api.fetchCategories()
-            (items, categories) = try await (fetchedItems, fetchedCategories)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        items = await store.fetchItems()
+        categories = await store.fetchCategories()
         isLoading = false
     }
 
     func deleteItem(_ item: Item) async {
-        do {
-            try await api.deleteItem(id: item.id)
-            items.removeAll { $0.id == item.id }
-            NotificationService.shared.cancelReminder(for: item)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        await store.deleteItem(id: item.id)
+        items.removeAll { $0.id == item.id }
+        NotificationService.shared.cancelReminder(for: item)
     }
 
     func toggleReminder(for item: Item) async {
         do {
-            let updated = try await api.updateItem(
+            let updated = try await store.updateItem(
                 id: item.id, ItemUpdate(reminderEnabled: !item.reminderEnabled)
             )
             if let idx = items.firstIndex(where: { $0.id == item.id }) {

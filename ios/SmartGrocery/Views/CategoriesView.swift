@@ -28,13 +28,9 @@ struct CategoriesView: View {
             .navigationTitle("Categories")
             .task {
                 isLoading = true
-                do { categories = try await APIService.shared.fetchCategories() }
-                catch { errorMessage = error.localizedDescription }
+                categories = await LocalStore.shared.fetchCategories()
                 isLoading = false
             }
-            .alert("Error", isPresented: .constant(errorMessage != nil)) {
-                Button("OK") { errorMessage = nil }
-            } message: { Text(errorMessage ?? "") }
         }
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class RemindersViewModel {
     var reminders: [Reminder] = []
@@ -8,7 +9,7 @@ final class RemindersViewModel {
     var isLoading = false
     var errorMessage: String?
 
-    private let api = APIService.shared
+    private let store = LocalStore.shared
 
     /// Items sorted by predicted runout date that still have reminders enabled.
     var upcomingItems: [Item] {
@@ -22,19 +23,14 @@ final class RemindersViewModel {
     func load() async {
         isLoading = true
         errorMessage = nil
-        do {
-            async let r = api.fetchReminders()
-            async let i = api.fetchItems()
-            (reminders, items) = try await (r, i)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        reminders = await store.fetchReminders()
+        items = await store.fetchItems()
         isLoading = false
     }
 
     func toggleReminder(for item: Item) async {
         do {
-            let updated = try await api.updateItem(
+            let updated = try await store.updateItem(
                 id: item.id, ItemUpdate(reminderEnabled: !item.reminderEnabled)
             )
             if let idx = items.firstIndex(where: { $0.id == item.id }) {

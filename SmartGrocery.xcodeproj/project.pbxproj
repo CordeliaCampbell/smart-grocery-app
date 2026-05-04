@@ -15,6 +15,8 @@
 		2D8B0FCDD2F02AA806A61668 /* ImageRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938A7CB73A299E41CC81EE43 /* ImageRecognitionService.swift */; };
 		392ED47DF3D2FE7B33BF1F44 /* RemindersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331A1482AAD8ABA8F06F6F09 /* RemindersView.swift */; };
 		3E17FC2C8E88B926E3222270 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4FA8B324031E41990469D0 /* DateFormatters.swift */; };
+		52465BAE72B251E7F0AB8F0F /* LocalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F10249FAFC6F8E4E7DA0D /* LocalStore.swift */; };
+		526106E6305332E8E225FF12 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CCCEB74755BE8761216E52 /* Theme.swift */; };
 		59CE8ECBB1087C64ECEBEB3B /* InventoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422293137F9CA36884901A01 /* InventoryViewModel.swift */; };
 		5AB85F313181ECAD76486EBE /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548DDBDE5BA4EFD8D5F1CCDC /* NotificationService.swift */; };
 		5DB726B73F0583F24CAEA187 /* ListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7E6A177633FCE8F159EF9 /* ListsView.swift */; };
@@ -36,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		063692E669C3111C46DF2566 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		074F10249FAFC6F8E4E7DA0D /* LocalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStore.swift; sourceTree = "<group>"; };
 		16F7E6A177633FCE8F159EF9 /* ListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsView.swift; sourceTree = "<group>"; };
 		331A1482AAD8ABA8F06F6F09 /* RemindersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersView.swift; sourceTree = "<group>"; };
 		3D7AE73D6243CE83CB075F7F /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		938A7CB73A299E41CC81EE43 /* ImageRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRecognitionService.swift; sourceTree = "<group>"; };
 		97B75244694A8646AF094945 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		9890E1E5AC804A0F1C3880C8 /* RemindersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewModel.swift; sourceTree = "<group>"; };
+		A0CCCEB74755BE8761216E52 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A2DD8ACD12CC53326C726881 /* SwiftDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataModels.swift; sourceTree = "<group>"; };
 		AF091110619ABC8C0B4709D9 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B67FB03E3D0AED92C0F1D12F /* DetectedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedItem.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 			children = (
 				063692E669C3111C46DF2566 /* APIService.swift */,
 				938A7CB73A299E41CC81EE43 /* ImageRecognitionService.swift */,
+				074F10249FAFC6F8E4E7DA0D /* LocalStore.swift */,
 				548DDBDE5BA4EFD8D5F1CCDC /* NotificationService.swift */,
 			);
 			path = Services;
@@ -117,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				6C4FA8B324031E41990469D0 /* DateFormatters.swift */,
+				A0CCCEB74755BE8761216E52 /* Theme.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -242,12 +248,14 @@
 				8D3DCB83A880D4282C6EB490 /* Item.swift in Sources */,
 				5DB726B73F0583F24CAEA187 /* ListsView.swift in Sources */,
 				C136A3663D3AF49A0C9BDF0E /* ListsViewModel.swift in Sources */,
+				52465BAE72B251E7F0AB8F0F /* LocalStore.swift in Sources */,
 				5AB85F313181ECAD76486EBE /* NotificationService.swift in Sources */,
 				6D30F3767EE56C0544B325CF /* Reminder.swift in Sources */,
 				392ED47DF3D2FE7B33BF1F44 /* RemindersView.swift in Sources */,
 				EB87BCD13040989243CAC166 /* RemindersViewModel.swift in Sources */,
 				006EAE900E97549D1736DD51 /* SmartGroceryApp.swift in Sources */,
 				1B8B999375739AC87C073783 /* SwiftDataModels.swift in Sources */,
+				526106E6305332E8E225FF12 /* Theme.swift in Sources */,
 				8E1E3935F3669BBF3384F689 /* UploadView.swift in Sources */,
 				D96A0384BF79020198BB6530 /* UploadViewModel.swift in Sources */,
 			);

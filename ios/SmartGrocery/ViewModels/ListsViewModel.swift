@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class ListsViewModel {
     var lists: [GroceryList] = []
@@ -8,48 +9,36 @@ final class ListsViewModel {
     var isLoading = false
     var errorMessage: String?
 
-    private let api = APIService.shared
+    private let store = LocalStore.shared
 
     func loadLists() async {
         isLoading = true
         errorMessage = nil
-        do {
-            lists = try await api.fetchLists()
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        lists = await store.fetchLists()
         isLoading = false
     }
 
     func loadDetail(listId: Int) async {
         do {
-            selectedListDetail = try await api.fetchListDetail(id: listId)
+            selectedListDetail = try await store.fetchListDetail(id: listId)
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
     func createList(name: String, type: String = "custom") async {
-        do {
-            let newList = try await api.createList(ListCreate(name: name, listType: type))
-            lists.append(newList)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        let newList = await store.createList(ListCreate(name: name, listType: type))
+        lists.append(newList)
     }
 
     func deleteList(_ list: GroceryList) async {
-        do {
-            try await api.deleteList(id: list.id)
-            lists.removeAll { $0.id == list.id }
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        await store.deleteList(id: list.id)
+        lists.removeAll { $0.id == list.id }
     }
 
     func addItem(to listId: Int, name: String, quantity: Int = 1) async {
         do {
-            let item = try await api.addListItem(listId: listId, ListItemCreate(itemName: name, quantity: quantity))
+            let item = try await store.addListItem(listId: listId, ListItemCreate(itemName: name, quantity: quantity))
             selectedListDetail?.listItems.append(item)  // local update
         } catch {
             errorMessage = error.localizedDescription
@@ -58,7 +47,7 @@ final class ListsViewModel {
 
     func toggleCheck(_ listItem: ListItem, in listId: Int) async {
         do {
-            let updated = try await api.updateListItem(
+            let updated = try await store.updateListItem(
                 listId: listId,
                 itemId: listItem.id,
                 ListItemUpdate(checked: !listItem.checked)
@@ -72,12 +61,8 @@ final class ListsViewModel {
     }
 
     func deleteItem(_ listItem: ListItem, from listId: Int) async {
-        do {
-            try await api.deleteListItem(listId: listId, itemId: listItem.id)
-            selectedListDetail?.listItems.removeAll { $0.id == listItem.id }
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        await store.deleteListItem(listId: listId, itemId: listItem.id)
+        selectedListDetail?.listItems.removeAll { $0.id == listItem.id }
     }
 }
 

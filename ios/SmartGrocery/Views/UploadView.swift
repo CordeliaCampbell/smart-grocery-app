@@ -25,7 +25,7 @@ struct UploadView: View {
                 errorLabel
             }
             .padding(.top)
-            .navigationTitle("Scan Items")
+            .navigationTitle("Add Items")
             .sheet(isPresented: $vm.showConfirmation) {
                 ConfirmItemsView(detected: vm.detectedItems) {
                     vm.reset()
@@ -60,7 +60,7 @@ struct UploadView: View {
                 Image(systemName: "photo.on.rectangle.angled")
                     .font(.system(size: 48))
                     .foregroundStyle(.secondary)
-                Text("Pick or take a photo")
+                Text("Pick or take a photo (optional)")
                     .foregroundStyle(.secondary)
             }
         }
@@ -90,16 +90,16 @@ struct UploadView: View {
             Task { await vm.analyze() }
         } label: {
             Group {
-                if vm.isAnalyzing {
+                if vm.isPreparing {
                     ProgressView()
                 } else {
-                    Label("Analyze Image", systemImage: "sparkles")
+                    Label("Continue", systemImage: "square.and.pencil")
                 }
             }
             .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
-        .disabled(vm.selectedImage == nil || vm.isAnalyzing)
+        .disabled(vm.isPreparing)
         .padding(.horizontal)
     }
 
