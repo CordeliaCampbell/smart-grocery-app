@@ -33,7 +33,7 @@ targets:
 
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.smartgrocery.app
+        PRODUCT_BUNDLE_IDENTIFIER: com.cordeliacampbell.smartgroceryapp
         SWIFT_VERSION: "5.9"
         TARGETED_DEVICE_FAMILY: "1"
         ENABLE_PREVIEWS: YES
